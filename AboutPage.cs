@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace UKD_TestClass
 {
-    public partial class StartPage : Form
+    public partial class AboutPage : Form
     {
-        public StartPage()
+        public AboutPage()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

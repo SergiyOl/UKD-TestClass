@@ -67,6 +67,7 @@ namespace UKD_TestClass
             this.button_CreateTest.TabIndex = 2;
             this.button_CreateTest.Text = "Створити новий тест";
             this.button_CreateTest.UseVisualStyleBackColor = true;
+            this.button_CreateTest.Click += new System.EventHandler(this.button_CreateTest_Click);
             // 
             // button_RedactTest
             // 
@@ -76,6 +77,7 @@ namespace UKD_TestClass
             this.button_RedactTest.TabIndex = 3;
             this.button_RedactTest.Text = "Редагувати наявний тест";
             this.button_RedactTest.UseVisualStyleBackColor = true;
+            this.button_RedactTest.Click += new System.EventHandler(this.button_RedactTest_Click);
             // 
             // button_TakeTest
             // 
@@ -85,6 +87,7 @@ namespace UKD_TestClass
             this.button_TakeTest.TabIndex = 4;
             this.button_TakeTest.Text = "Пройти тест";
             this.button_TakeTest.UseVisualStyleBackColor = true;
+            this.button_TakeTest.Click += new System.EventHandler(this.button_TakeTest_Click);
             // 
             // button_About
             // 
@@ -94,6 +97,7 @@ namespace UKD_TestClass
             this.button_About.TabIndex = 5;
             this.button_About.Text = "Довідник";
             this.button_About.UseVisualStyleBackColor = true;
+            this.button_About.Click += new System.EventHandler(this.button_About_Click);
             // 
             // StartPage
             // 
