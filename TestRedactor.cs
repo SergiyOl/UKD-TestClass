@@ -29,6 +29,7 @@ namespace UKD_TestClass
         private void button1_Click(object sender, EventArgs e)
         {
             createQuestion();
+            button1.Location = new Point(button1.Location.X, button1.Location.Y + 200);
             /*button.Location = button1.Location;
             button.Text = "@_@";
             button.Size = button1.Size;
@@ -109,29 +110,29 @@ namespace UKD_TestClass
 
             textBoxV1.Location = new Point(51, 65);
             textBoxV1.Name = "textBoxV1";
-            textBoxV1.Size = new Size(600, 22);
+            textBoxV1.Size = new Size(550, 22);
             textBoxV1.TabIndex = 15;
 
             textBoxV2.Location = new Point(51, 92);
             textBoxV2.Name = "textBoxV2";
-            textBoxV2.Size = new Size(600, 22);
+            textBoxV2.Size = new Size(550, 22);
             textBoxV2.TabIndex = 16;
 
             textBoxV3.Location = new Point(51, 119);
             textBoxV3.Name = "textBoxV3";
-            textBoxV3.Size = new Size(600, 22);
+            textBoxV3.Size = new Size(550, 22);
             textBoxV3.TabIndex = 17;
 
             textBoxV4.Location = new Point(50, 146);
             textBoxV4.Name = "textBoxV4";
-            textBoxV4.Size = new Size(600, 22);
+            textBoxV4.Size = new Size(550, 22);
             textBoxV4.TabIndex = 18;
             // Кнопка видалення
             Button buttonDelete = new Button();
             
-            buttonDelete.Location = new Point(828, 77);
+            buttonDelete.Location = new Point(620, 70);
             buttonDelete.Name = "buttonDelete";
-            buttonDelete.Size = new Size(170, 30);
+            buttonDelete.Size = new Size(160, 30);
             buttonDelete.TabIndex = 15;
             buttonDelete.Text = "Видалити питання";
             buttonDelete.UseVisualStyleBackColor = true;
@@ -149,7 +150,7 @@ namespace UKD_TestClass
             groupBox.Controls.Add(radioButtonV3);
             groupBox.Controls.Add(radioButtonV2);
             groupBox.Controls.Add(radioButtonV1);
-            groupBox.Location = new Point(48, 780);
+            groupBox.Location = new Point(48, button1.Location.Y); 
             groupBox.Name = "groupBox";
             groupBox.Size = new Size(810, 180);
             groupBox.TabIndex = 10;
