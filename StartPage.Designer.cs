@@ -116,7 +116,7 @@ namespace UKD_TestClass
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "StartPage";
             this.Text = "TestClass";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.StartPage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

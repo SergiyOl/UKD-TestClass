@@ -17,15 +17,28 @@ namespace UKD_TestClass
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void StartPage_Load(object sender, EventArgs e)
         {
 
         }
 
         private void button_CreateTest_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Nothing yet", "Work in progress",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Створення вікна редактора
+            Form TestRedactor = new TestRedactor();
+            // Задання позиції
+            TestRedactor.StartPosition = FormStartPosition.Manual;
+            TestRedactor.Location = this.Location;
+            // Івент закриття
+            TestRedactor.FormClosed += TestRedactor_Closed;
+            // Перемикання між вікнами
+            this.Hide();
+            TestRedactor.Show();
+        }
+
+        private void TestRedactor_Closed(object sender, FormClosedEventArgs e)
+        {
+            this.Show();
         }
 
         private void button_RedactTest_Click(object sender, EventArgs e)
