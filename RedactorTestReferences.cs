@@ -10,9 +10,9 @@ namespace UKD_TestClass
     {
         public List<RedactorQuestion> questions = new List<RedactorQuestion>();
 
-        public void AddNewQuestion()
+        public void AddNewQuestion(RedactorQuestion item)
         {
-            questions.Add(new RedactorQuestion());
+            questions.Add(item);
         }
     }
 }

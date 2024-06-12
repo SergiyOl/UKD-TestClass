@@ -12,7 +12,7 @@ namespace UKD_TestClass
 {
     public partial class TestRedactor : Form
     {
-        RedactorTestReferences test = new RedactorTestReferences();
+        RedactorTestReferences testReferences = new RedactorTestReferences();
         int questionAmount = 0;
         /*Button button = new Button();*/
 
@@ -40,7 +40,7 @@ namespace UKD_TestClass
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            /*this.Controls.Remove(button);*/
+            
         }
 
         private void createQuestion()
@@ -48,11 +48,11 @@ namespace UKD_TestClass
             // Номер питання
             questionAmount++;
             // Текст
-            Label label = new Label
+            Label labelQuestion = new Label
             {
                 AutoSize = true,
                 Location = new Point(23, 31),
-                Name = "label",
+                Name = "labelQuestion",
                 Size = new Size(69, 17),
                 TabIndex = 19,
                 Text = "Питання:"
@@ -141,7 +141,7 @@ namespace UKD_TestClass
             GroupBox groupBox = new GroupBox();
             groupBox.Controls.Add(buttonDelete);
             groupBox.Controls.Add(textBoxQuestion);
-            groupBox.Controls.Add(label);
+            groupBox.Controls.Add(labelQuestion);
             groupBox.Controls.Add(textBoxV4);
             groupBox.Controls.Add(textBoxV3);
             groupBox.Controls.Add(textBoxV2);
@@ -159,6 +159,12 @@ namespace UKD_TestClass
             // Виведення
             this.Controls.Add(groupBox);
             // Збереження
+            testReferences.AddNewQuestion(
+                new RedactorQuestion(groupBox, labelQuestion, textBoxQuestion,
+                                    new RedactorVariant(radioButtonV1, textBoxV1),
+                                    new RedactorVariant(radioButtonV2, textBoxV2),
+                                    new RedactorVariant(radioButtonV3, textBoxV3),
+                                    new RedactorVariant(radioButtonV4, textBoxV4)));
         }
     }
 }

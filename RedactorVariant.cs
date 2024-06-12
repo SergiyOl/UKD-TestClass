@@ -10,5 +10,11 @@ namespace UKD_TestClass
     {
         public object state;
         public object text;
+
+        public RedactorVariant(object state_, object text_)
+        {
+            state = state_;
+            text = text_;
+        }
     }
 }
