@@ -8,6 +8,7 @@ namespace UKD_TestClass
 {
     public class RedactorQuestion
     {
+        public object groupBox;
         public object question;
         public List<RedactorVariant> variants;
         public List<object> otherElements;
