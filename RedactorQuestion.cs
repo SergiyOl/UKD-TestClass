@@ -11,13 +11,15 @@ namespace UKD_TestClass
         public object groupBox;
         public object lable;
         public object question;
+        public object buttonDelete;
         public RedactorVariant[] variants;
 
-        public RedactorQuestion(object groupBox_, object lable_, object question_, params RedactorVariant[] variants_)
+        public RedactorQuestion(object groupBox_, object lable_, object question_, object buttonDelete_, params RedactorVariant[] variants_)
         {
             groupBox = groupBox_;
             lable = lable_;
             question = question_;
+            buttonDelete = buttonDelete_;
             variants = variants_;
         }
     }

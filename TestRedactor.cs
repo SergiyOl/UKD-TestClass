@@ -30,17 +30,39 @@ namespace UKD_TestClass
         {
             createQuestion();
             button1.Location = new Point(button1.Location.X, button1.Location.Y + 200);
-            /*button.Location = button1.Location;
-            button.Text = "@_@";
-            button.Size = button1.Size;
-            button.Visible = true;
-            this.Controls.Add(button);
-            button1.Location = new Point(button1.Location.X, button1.Location.Y + 50);*/
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
         {
-            
+            Button b = (Button)sender;
+            int id = (int)b.Tag;
+            GroupBox toDelete = (GroupBox)testReferences.questions.ElementAt(id).groupBox;
+            this.Controls.Remove(toDelete);
+            MoveQuestions(toDelete.Size.Height+20, id + 1);
+            PushIndexes(id + 1);
+            testReferences.questions.RemoveAt(id);
+            questionAmount--;
+        }
+
+        private void MoveQuestions(int amount, int startPos)
+        {
+            button1.Location = new Point(button1.Location.X, button1.Location.Y - amount);
+            for (int i = startPos; i<testReferences.questions.Count; i++)
+            {
+                GroupBox group = (GroupBox)testReferences.questions.ElementAt(i).groupBox;
+                group.Location = new Point(group.Location.X, group.Location.Y - amount);
+            }
+        }
+
+        private void PushIndexes(int startPos)
+        {
+            for (int i = startPos; i < testReferences.questions.Count; i++)
+            {
+                GroupBox group = (GroupBox)testReferences.questions.ElementAt(i).groupBox;
+                Button button = (Button)testReferences.questions.ElementAt(i).buttonDelete;
+                group.Text = $"Питання {i}";
+                button.Tag = (int)button.Tag - 1;
+            }
         }
 
         private void createQuestion()
@@ -66,76 +88,86 @@ namespace UKD_TestClass
                 TabIndex = 20
             };
             // Вибір варіанту
-            RadioButton radioButtonV1 = new RadioButton();
-            RadioButton radioButtonV2 = new RadioButton();
-            RadioButton radioButtonV3 = new RadioButton();
-            RadioButton radioButtonV4 = new RadioButton();
-
-            radioButtonV1.AutoSize = true;
-            radioButtonV1.Location = new Point(27, 68);
-            radioButtonV1.Name = "radioButtonV1";
-            radioButtonV1.Size = new Size(17, 16);
-            radioButtonV1.TabIndex = 0;
-            radioButtonV1.TabStop = true;
-            radioButtonV1.UseVisualStyleBackColor = true;
-
-            radioButtonV2.AutoSize = true;
-            radioButtonV2.Location = new Point(27, 95);
-            radioButtonV2.Name = "radioButtonV2";
-            radioButtonV2.Size = new Size(17, 16);
-            radioButtonV2.TabIndex = 1;
-            radioButtonV2.TabStop = true;
-            radioButtonV2.UseVisualStyleBackColor = true;
-
-            radioButtonV3.AutoSize = true;
-            radioButtonV3.Location = new Point(27, 122);
-            radioButtonV3.Name = "radioButtonV3";
-            radioButtonV3.Size = new Size(17, 16);
-            radioButtonV3.TabIndex = 2;
-            radioButtonV3.TabStop = true;
-            radioButtonV3.UseVisualStyleBackColor = true;
-
-            radioButtonV4.AutoSize = true;
-            radioButtonV4.Location = new Point(27, 149);
-            radioButtonV4.Name = "radioButtonV4";
-            radioButtonV4.Size = new Size(17, 16);
-            radioButtonV4.TabIndex = 3;
-            radioButtonV4.TabStop = true;
-            radioButtonV4.UseVisualStyleBackColor = true;
+            RadioButton radioButtonV1 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 68),
+                Name = "radioButtonV1",
+                Size = new Size(17, 16),
+                TabIndex = 0,
+                TabStop = true,
+                UseVisualStyleBackColor = true
+            };
+            RadioButton radioButtonV2 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 95),
+                Name = "radioButtonV2",
+                Size = new Size(17, 16),
+                TabIndex = 1,
+                TabStop = true,
+                UseVisualStyleBackColor = true
+            };
+            RadioButton radioButtonV3 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 122),
+                Name = "radioButtonV3",
+                Size = new Size(17, 16),
+                TabIndex = 2,
+                TabStop = true,
+                UseVisualStyleBackColor = true
+            };
+            RadioButton radioButtonV4 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 149),
+                Name = "radioButtonV4",
+                Size = new Size(17, 16),
+                TabIndex = 3,
+                TabStop = true,
+                UseVisualStyleBackColor = true
+            };
             // Текст варіантів
-            TextBox textBoxV1 = new TextBox();
-            TextBox textBoxV2 = new TextBox();
-            TextBox textBoxV3 = new TextBox();
-            TextBox textBoxV4 = new TextBox();
-
-            textBoxV1.Location = new Point(51, 65);
-            textBoxV1.Name = "textBoxV1";
-            textBoxV1.Size = new Size(550, 22);
-            textBoxV1.TabIndex = 15;
-
-            textBoxV2.Location = new Point(51, 92);
-            textBoxV2.Name = "textBoxV2";
-            textBoxV2.Size = new Size(550, 22);
-            textBoxV2.TabIndex = 16;
-
-            textBoxV3.Location = new Point(51, 119);
-            textBoxV3.Name = "textBoxV3";
-            textBoxV3.Size = new Size(550, 22);
-            textBoxV3.TabIndex = 17;
-
-            textBoxV4.Location = new Point(50, 146);
-            textBoxV4.Name = "textBoxV4";
-            textBoxV4.Size = new Size(550, 22);
-            textBoxV4.TabIndex = 18;
+            TextBox textBoxV1 = new TextBox
+            {
+                Location = new Point(51, 65),
+                Name = "textBoxV1",
+                Size = new Size(550, 22),
+                TabIndex = 15
+            };
+            TextBox textBoxV2 = new TextBox
+            {
+                Location = new Point(51, 92),
+                Name = "textBoxV2",
+                Size = new Size(550, 22),
+                TabIndex = 16
+            };
+            TextBox textBoxV3 = new TextBox
+            {
+                Location = new Point(51, 119),
+                Name = "textBoxV3",
+                Size = new Size(550, 22),
+                TabIndex = 17
+            };
+            TextBox textBoxV4 = new TextBox
+            {
+                Location = new Point(50, 146),
+                Name = "textBoxV4",
+                Size = new Size(550, 22),
+                TabIndex = 18
+            };
             // Кнопка видалення
-            Button buttonDelete = new Button();
-            
-            buttonDelete.Location = new Point(620, 70);
-            buttonDelete.Name = "buttonDelete";
-            buttonDelete.Size = new Size(160, 30);
-            buttonDelete.TabIndex = 15;
-            buttonDelete.Text = "Видалити питання";
-            buttonDelete.UseVisualStyleBackColor = true;
+            Button buttonDelete = new Button
+            {
+                Location = new Point(620, 70),
+                Name = "buttonDelete",
+                Size = new Size(160, 30),
+                TabIndex = 15,
+                Text = "Видалити питання",
+                UseVisualStyleBackColor = true,
+                Tag = questionAmount - 1
+            };
             buttonDelete.Click += new EventHandler(buttonDelete_Click);
             // Коробка
             GroupBox groupBox = new GroupBox();
@@ -160,7 +192,7 @@ namespace UKD_TestClass
             this.Controls.Add(groupBox);
             // Збереження
             testReferences.AddNewQuestion(
-                new RedactorQuestion(groupBox, labelQuestion, textBoxQuestion,
+                new RedactorQuestion(groupBox, labelQuestion, textBoxQuestion, buttonDelete,
                                     new RedactorVariant(radioButtonV1, textBoxV1),
                                     new RedactorVariant(radioButtonV2, textBoxV2),
                                     new RedactorVariant(radioButtonV3, textBoxV3),
