@@ -55,16 +55,35 @@ namespace UKD_TestClass
                     using (StreamReader reader = new StreamReader(fileStream))
                     {
                         fileContent = reader.ReadToEnd();
+                        // Запис даних
+                        testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
+                        // Показ зчитаної інформації про тест
+                        textBox_TestName.Text = testInfo.testName;
+                        textBox_GivenQuestionAmount.Text = $"{testInfo.givenQuestionAmount}";
+                        textBox_Password.Text = testInfo.password;
+                        checkBox_ScrumbledQuestions.Checked = testInfo.scrumbledQuestion;
+                        checkBox_ScrumbledVariants.Checked = testInfo.scrumbledVariants;
+                        foreach (var item in testInfo.questions)
+                        {
+                            createQuestion();
+                            TextBox question = (TextBox)testReferences.questions.Last().question;
+                            question.Text = item.question;
+                            for (int i = 0; i < item.variants.Count(); i++)
+                            {
+                                TextBox text = (TextBox)testReferences.questions.Last().variants.ElementAt(i).text;
+                                text.Text = item.variants.ElementAt(i).text;
+                                RadioButton state = (RadioButton)testReferences.questions.Last().variants.ElementAt(i).state;
+                                state.Checked = item.variants.ElementAt(i).state;
+                            }
+                        }
                     }
                 }
             }
-            testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             createQuestion();
-            button1.Location = new Point(button1.Location.X, button1.Location.Y + 200);
             label3.Text = $"{questionAmount}";
         }
 
@@ -268,6 +287,8 @@ namespace UKD_TestClass
                                     new RedactorVariant(radioButtonV2, textBoxV2),
                                     new RedactorVariant(radioButtonV3, textBoxV3),
                                     new RedactorVariant(radioButtonV4, textBoxV4)));
+            // Посунути кнопку
+            button1.Location = new Point(button1.Location.X, button1.Location.Y + 200);
         }
     }
 }
