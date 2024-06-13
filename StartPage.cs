@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace UKD_TestClass
 {
     public partial class StartPage : Form
     {
+        Form testRedactor;
+
         public StartPage()
         {
             InitializeComponent();
@@ -24,16 +27,23 @@ namespace UKD_TestClass
 
         private void button_CreateTest_Click(object sender, EventArgs e)
         {
+            OpenTestRedactor("Create");
+        }
+
+        private void OpenTestRedactor(string tag)
+        {
             // Створення вікна редактора
-            Form TestRedactor = new TestRedactor();
+            testRedactor = new TestRedactor();
+            // Передання тегу
+            testRedactor.Tag = tag;
             // Задання позиції
-            TestRedactor.StartPosition = FormStartPosition.Manual;
-            TestRedactor.Location = this.Location;
+            testRedactor.StartPosition = FormStartPosition.Manual;
+            testRedactor.Location = this.Location;
             // Івент закриття
-            TestRedactor.FormClosed += TestRedactor_Closed;
+            testRedactor.FormClosed += TestRedactor_Closed;
             // Перемикання між вікнами
             this.Hide();
-            TestRedactor.Show();
+            testRedactor.Show();
         }
 
         private void TestRedactor_Closed(object sender, FormClosedEventArgs e)
@@ -43,8 +53,7 @@ namespace UKD_TestClass
 
         private void button_RedactTest_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Nothing yet", "Work in progress",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            OpenTestRedactor("Load");
         }
 
         private void button_TakeTest_Click(object sender, EventArgs e)

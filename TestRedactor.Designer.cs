@@ -43,6 +43,8 @@ namespace UKD_TestClass
             this.button1 = new System.Windows.Forms.Button();
             this.button_Back = new System.Windows.Forms.Button();
             this.button_Save = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.SuspendLayout();
             // 
             // label1
@@ -161,6 +163,10 @@ namespace UKD_TestClass
             this.button_Save.UseVisualStyleBackColor = true;
             this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            // 
             // TestRedactor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -180,10 +186,12 @@ namespace UKD_TestClass
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.Cursor = System.Windows.Forms.Cursors.Default;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TestRedactor";
-            this.Text = "Form1";
-            this.Load += new System.EventHandler(this.TestRedactor_Load);
+            this.Text = "Редактор тестів";
+            /*this.Load += new System.EventHandler(this.TestRedactor_Load);*/
+            this.Shown += new System.EventHandler(this.TestRedactor_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,5 +212,7 @@ namespace UKD_TestClass
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button_Back;
         private System.Windows.Forms.Button button_Save;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }

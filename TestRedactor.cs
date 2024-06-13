@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace UKD_TestClass
 {
@@ -22,9 +24,41 @@ namespace UKD_TestClass
             InitializeComponent();
         }
 
-        private void TestRedactor_Load(object sender, EventArgs e)
+        private void TestRedactor_Shown(object sender, EventArgs e)
         {
+            if (Tag == "Load")
+            {
+                LoadTest();
+            }
+        }
 
+        private void LoadTest()
+        {
+            // Прочитати з файлу
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        fileContent = reader.ReadToEnd();
+                    }
+                }
+            }
+            testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -50,17 +84,34 @@ namespace UKD_TestClass
         private void button_Save_Click(object sender, EventArgs e)
         {
             testInfo = new TestInfo(textBox_TestName.Text, textBox_Password.Text, Int32.Parse(textBox_GivenQuestionAmount.Text), checkBox_ScrumbledQuestions.Checked, checkBox_ScrumbledVariants.Checked);
-            foreach(var item in testReferences.questions)
+            foreach (var item in testReferences.questions)
             {
                 TextBox question = (TextBox)item.question;
                 List<VariantInfo> variants = new List<VariantInfo>();
-                foreach(var variant in item.variants)
+                foreach (var variant in item.variants)
                 {
                     RadioButton state = (RadioButton)variant.state;
                     TextBox text = (TextBox)variant.text;
                     variants.Add(new VariantInfo(state.Checked, text.Text));
                 }
                 testInfo.AddNewQuestion(new QuestionInfo(question.Text, variants));
+            }
+            // Запис у файл
+            string strJson = JsonConvert.SerializeObject(testInfo);
+            Stream myStream;
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+
+            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+            saveFileDialog1.FilterIndex = 2;
+            saveFileDialog1.RestoreDirectory = true;
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                if ((myStream = saveFileDialog1.OpenFile()) != null)
+                {
+                    myStream.Close();
+                    System.IO.File.WriteAllText(saveFileDialog1.FileName, strJson);
+                }
             }
         }
 
