@@ -13,6 +13,7 @@ namespace UKD_TestClass
     public partial class TestRedactor : Form
     {
         RedactorTestReferences testReferences = new RedactorTestReferences();
+        TestInfo testInfo;
         int questionAmount = 0;
         /*Button button = new Button();*/
 
@@ -30,6 +31,7 @@ namespace UKD_TestClass
         {
             createQuestion();
             button1.Location = new Point(button1.Location.X, button1.Location.Y + 200);
+            label3.Text = $"{questionAmount}";
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -42,6 +44,24 @@ namespace UKD_TestClass
             PushIndexes(id + 1);
             testReferences.questions.RemoveAt(id);
             questionAmount--;
+            label3.Text = $"{questionAmount}";
+        }
+
+        private void button_Save_Click(object sender, EventArgs e)
+        {
+            testInfo = new TestInfo(textBox_TestName.Text, textBox_Password.Text, Int32.Parse(textBox_GivenQuestionAmount.Text), checkBox_ScrumbledQuestions.Checked, checkBox_ScrumbledVariants.Checked);
+            foreach(var item in testReferences.questions)
+            {
+                TextBox question = (TextBox)item.question;
+                List<VariantInfo> variants = new List<VariantInfo>();
+                foreach(var variant in item.variants)
+                {
+                    RadioButton state = (RadioButton)variant.state;
+                    TextBox text = (TextBox)variant.text;
+                    variants.Add(new VariantInfo(state.Checked, text.Text));
+                }
+                testInfo.AddNewQuestion(new QuestionInfo(question.Text, variants));
+            }
         }
 
         private void MoveQuestions(int amount, int startPos)
