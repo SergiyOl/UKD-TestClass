@@ -14,6 +14,7 @@ namespace UKD_TestClass
     public partial class StartPage : Form
     {
         Form testRedactor;
+        Form takeTest;
 
         public StartPage()
         {
@@ -40,13 +41,13 @@ namespace UKD_TestClass
             testRedactor.StartPosition = FormStartPosition.Manual;
             testRedactor.Location = this.Location;
             // Івент закриття
-            testRedactor.FormClosed += TestRedactor_Closed;
+            testRedactor.FormClosed += Tab_Closed;
             // Перемикання між вікнами
             this.Hide();
             testRedactor.Show();
         }
 
-        private void TestRedactor_Closed(object sender, FormClosedEventArgs e)
+        private void Tab_Closed(object sender, FormClosedEventArgs e)
         {
             this.Show();
         }
@@ -58,8 +59,16 @@ namespace UKD_TestClass
 
         private void button_TakeTest_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Nothing yet", "Work in progress",
-                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Створення вікна редактора
+            takeTest = new TakeTest();
+            // Задання позиції
+            takeTest.StartPosition = FormStartPosition.Manual;
+            takeTest.Location = this.Location;
+            // Івент закриття
+            takeTest.FormClosed += Tab_Closed;
+            // Перемикання між вікнами
+            this.Hide();
+            takeTest.Show();
         }
 
         private void button_About_Click(object sender, EventArgs e)

@@ -17,7 +17,6 @@ namespace UKD_TestClass
         RedactorTestReferences testReferences = new RedactorTestReferences();
         TestInfo testInfo;
         int questionAmount = 0;
-        /*Button button = new Button();*/
 
         public TestRedactor()
         {

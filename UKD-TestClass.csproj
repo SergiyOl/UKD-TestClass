@@ -59,6 +59,12 @@
     <Compile Include="RedactorQuestion.cs" />
     <Compile Include="RedactorTestReferences.cs" />
     <Compile Include="RedactorVariant.cs" />
+    <Compile Include="TakeTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TakeTest.Designer.cs">
+      <DependentUpon>TakeTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestInfo.cs" />
     <Compile Include="TestRedactor.cs">
       <SubType>Form</SubType>
@@ -90,6 +96,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="TakeTest.resx">
+      <DependentUpon>TakeTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TestRedactor.resx">
       <DependentUpon>TestRedactor.cs</DependentUpon>
     </EmbeddedResource>
