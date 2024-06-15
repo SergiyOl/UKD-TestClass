@@ -289,5 +289,11 @@ namespace UKD_TestClass
             // Посунути кнопку
             button1.Location = new Point(button1.Location.X, button1.Location.Y + 200);
         }
+
+        private void button_Back_Click(object sender, EventArgs e)
+        {
+            this.Tag = "Back";
+            this.Close();
+        }
     }
 }

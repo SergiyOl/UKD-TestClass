@@ -49,7 +49,10 @@ namespace UKD_TestClass
 
         private void Tab_Closed(object sender, FormClosedEventArgs e)
         {
-            this.Show();
+            if ((sender as Form).Tag == "Back")
+                this.Show();
+            else
+                this.Close();
         }
 
         private void button_RedactTest_Click(object sender, EventArgs e)

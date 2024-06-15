@@ -152,6 +152,7 @@ namespace UKD_TestClass
             this.button_Back.TabIndex = 15;
             this.button_Back.Text = "Назад в меню";
             this.button_Back.UseVisualStyleBackColor = true;
+            this.button_Back.Click += new System.EventHandler(this.button_Back_Click);
             // 
             // button_Save
             // 
@@ -190,7 +191,6 @@ namespace UKD_TestClass
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TestRedactor";
             this.Text = "Редактор тестів";
-            /*this.Load += new System.EventHandler(this.TestRedactor_Load);*/
             this.Shown += new System.EventHandler(this.TestRedactor_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();

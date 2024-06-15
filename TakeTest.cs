@@ -236,6 +236,12 @@ namespace UKD_TestClass
             label_Result.Text = $"Результат: {rightAnswerAmount}/{givenQuestions.Count()}";
             label_Result.Show();
         }
+
+        private void button_Back_Click(object sender, EventArgs e)
+        {
+            this.Tag = "Back";
+            this.Close();
+        }
     }
     public static class ExtensionClass
     {

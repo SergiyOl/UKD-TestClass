@@ -52,6 +52,7 @@ namespace UKD_TestClass
             this.button_Back.TabIndex = 16;
             this.button_Back.Text = "Назад в меню";
             this.button_Back.UseVisualStyleBackColor = true;
+            this.button_Back.Click += new System.EventHandler(this.button_Back_Click);
             // 
             // label_TestName
             // 
