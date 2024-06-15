@@ -29,6 +29,7 @@ namespace UKD_TestClass
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TakeTest));
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button_Back = new System.Windows.Forms.Button();
             this.label_TestName = new System.Windows.Forms.Label();
@@ -139,6 +140,7 @@ namespace UKD_TestClass
             this.Controls.Add(this.label_QuestionAmount);
             this.Controls.Add(this.label_TestName);
             this.Controls.Add(this.button_Back);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TakeTest";
             this.Text = "Проходження тесту";
             this.Shown += new System.EventHandler(this.TakeTest_Shown);
