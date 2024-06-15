@@ -30,21 +30,99 @@ namespace UKD_TestClass
         private void InitializeComponent()
         {
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.label1 = new System.Windows.Forms.Label();
+            this.button_Back = new System.Windows.Forms.Button();
+            this.label_TestName = new System.Windows.Forms.Label();
+            this.label_QuestionAmount = new System.Windows.Forms.Label();
+            this.button_StartTest = new System.Windows.Forms.Button();
+            this.button_Previous = new System.Windows.Forms.Button();
+            this.button_Next = new System.Windows.Forms.Button();
+            this.button_EndTest = new System.Windows.Forms.Button();
+            this.label_Result = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // label1
+            // button_Back
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(92, 67);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.button_Back.Location = new System.Drawing.Point(42, 40);
+            this.button_Back.Name = "button_Back";
+            this.button_Back.Size = new System.Drawing.Size(206, 40);
+            this.button_Back.TabIndex = 16;
+            this.button_Back.Text = "Назад в меню";
+            this.button_Back.UseVisualStyleBackColor = true;
+            // 
+            // label_TestName
+            // 
+            this.label_TestName.AutoSize = true;
+            this.label_TestName.Location = new System.Drawing.Point(39, 115);
+            this.label_TestName.Name = "label_TestName";
+            this.label_TestName.Size = new System.Drawing.Size(96, 17);
+            this.label_TestName.TabIndex = 17;
+            this.label_TestName.Text = "Назва тесту: ";
+            // 
+            // label_QuestionAmount
+            // 
+            this.label_QuestionAmount.AutoSize = true;
+            this.label_QuestionAmount.Location = new System.Drawing.Point(39, 152);
+            this.label_QuestionAmount.Name = "label_QuestionAmount";
+            this.label_QuestionAmount.Size = new System.Drawing.Size(124, 17);
+            this.label_QuestionAmount.TabIndex = 18;
+            this.label_QuestionAmount.Text = "Кількість питань: ";
+            // 
+            // button_StartTest
+            // 
+            this.button_StartTest.Location = new System.Drawing.Point(42, 200);
+            this.button_StartTest.Name = "button_StartTest";
+            this.button_StartTest.Size = new System.Drawing.Size(206, 40);
+            this.button_StartTest.TabIndex = 19;
+            this.button_StartTest.Text = "Розпочати тест";
+            this.button_StartTest.UseVisualStyleBackColor = true;
+            this.button_StartTest.Click += new System.EventHandler(this.button_StartTest_Click);
+            // 
+            // button_Previous
+            // 
+            this.button_Previous.Location = new System.Drawing.Point(42, 621);
+            this.button_Previous.Name = "button_Previous";
+            this.button_Previous.Size = new System.Drawing.Size(206, 40);
+            this.button_Previous.TabIndex = 20;
+            this.button_Previous.Text = "Попереднє питання";
+            this.button_Previous.UseVisualStyleBackColor = true;
+            this.button_Previous.Visible = false;
+            this.button_Previous.Click += new System.EventHandler(this.button_Previous_Click);
+            // 
+            // button_Next
+            // 
+            this.button_Next.Location = new System.Drawing.Point(318, 621);
+            this.button_Next.Name = "button_Next";
+            this.button_Next.Size = new System.Drawing.Size(206, 40);
+            this.button_Next.TabIndex = 21;
+            this.button_Next.Text = "Наступне питання";
+            this.button_Next.UseVisualStyleBackColor = true;
+            this.button_Next.Visible = false;
+            this.button_Next.Click += new System.EventHandler(this.button_Next_Click);
+            // 
+            // button_EndTest
+            // 
+            this.button_EndTest.Location = new System.Drawing.Point(318, 621);
+            this.button_EndTest.Name = "button_EndTest";
+            this.button_EndTest.Size = new System.Drawing.Size(206, 40);
+            this.button_EndTest.TabIndex = 22;
+            this.button_EndTest.Text = "Завершити тест";
+            this.button_EndTest.UseVisualStyleBackColor = true;
+            this.button_EndTest.Visible = false;
+            this.button_EndTest.Click += new System.EventHandler(this.button_EndTest_Click);
+            // 
+            // label_Result
+            // 
+            this.label_Result.AutoSize = true;
+            this.label_Result.Location = new System.Drawing.Point(39, 115);
+            this.label_Result.Name = "label_Result";
+            this.label_Result.Size = new System.Drawing.Size(84, 17);
+            this.label_Result.TabIndex = 23;
+            this.label_Result.Text = "Результат: ";
+            this.label_Result.Visible = false;
             // 
             // TakeTest
             // 
@@ -52,7 +130,14 @@ namespace UKD_TestClass
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1200, 700);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label_Result);
+            this.Controls.Add(this.button_EndTest);
+            this.Controls.Add(this.button_Next);
+            this.Controls.Add(this.button_Previous);
+            this.Controls.Add(this.button_StartTest);
+            this.Controls.Add(this.label_QuestionAmount);
+            this.Controls.Add(this.label_TestName);
+            this.Controls.Add(this.button_Back);
             this.Name = "TakeTest";
             this.Text = "Проходження тесту";
             this.Shown += new System.EventHandler(this.TakeTest_Shown);
@@ -64,6 +149,13 @@ namespace UKD_TestClass
         #endregion
 
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button_Back;
+        private System.Windows.Forms.Label label_TestName;
+        private System.Windows.Forms.Label label_QuestionAmount;
+        private System.Windows.Forms.Button button_StartTest;
+        private System.Windows.Forms.Button button_Previous;
+        private System.Windows.Forms.Button button_Next;
+        private System.Windows.Forms.Button button_EndTest;
+        private System.Windows.Forms.Label label_Result;
     }
 }

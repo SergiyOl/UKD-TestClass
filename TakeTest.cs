@@ -17,6 +17,8 @@ namespace UKD_TestClass
         Random r = new Random();
         TestInfo testInfo;
         List<QuestionInfo> givenQuestions = new List<QuestionInfo>();
+        List<TakeTestQuestionReferences> questionReferences = new List<TakeTestQuestionReferences>();
+        int currentQuestion = 0;
 
         public TakeTest()
         {
@@ -75,30 +77,164 @@ namespace UKD_TestClass
                         {
                             ExtensionClass.Shuffle(givenQuestions);
                         }
-                        // Показ зчитаної інформації про тест
-                        string strJson = JsonConvert.SerializeObject(givenQuestions);
-                        label1.Text = strJson;
-                        /*textBox_TestName.Text = testInfo.testName;
-                        textBox_GivenQuestionAmount.Text = $"{testInfo.givenQuestionAmount}";
-                        textBox_Password.Text = testInfo.password;
-                        checkBox_ScrumbledQuestions.Checked = testInfo.scrumbledQuestion;
-                        checkBox_ScrumbledVariants.Checked = testInfo.scrumbledVariants;
-                        foreach (var item in testInfo.questions)
+                        // Створення інтерфейсу питань
+                        for (int i = 0; i < givenQuestions.Count(); i++)
                         {
-                            createQuestion();
-                            TextBox question = (TextBox)testReferences.questions.Last().question;
-                            question.Text = item.question;
-                            for (int i = 0; i < item.variants.Count(); i++)
-                            {
-                                TextBox text = (TextBox)testReferences.questions.Last().variants.ElementAt(i).text;
-                                text.Text = item.variants.ElementAt(i).text;
-                                RadioButton state = (RadioButton)testReferences.questions.Last().variants.ElementAt(i).state;
-                                state.Checked = item.variants.ElementAt(i).state;
-                            }
-                        }*/
+                            CreateTestPage(i);
+                        }
                     }
                 }
             }
+        }
+
+        private void CreateTestPage(int id)
+        {
+            // Питання
+            Label labelQuestion = new Label
+            {
+                AutoSize = true,
+                Location = new Point(23, 31),
+                Name = "labelQuestion",
+                Size = new Size(69, 17),
+                TabIndex = 19,
+                Text = givenQuestions.ElementAt(id).question
+            };
+            // Вибір варіанту
+            RadioButton radioButtonV1 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 68),
+                Name = "radioButtonV1",
+                Size = new Size(17, 16),
+                TabIndex = 0,
+                TabStop = true,
+                UseVisualStyleBackColor = true,
+                Text = givenQuestions.ElementAt(id).variants.ElementAt(0).text
+            };
+            RadioButton radioButtonV2 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 95),
+                Name = "radioButtonV2",
+                Size = new Size(17, 16),
+                TabIndex = 1,
+                TabStop = true,
+                UseVisualStyleBackColor = true,
+                Text = givenQuestions.ElementAt(id).variants.ElementAt(1).text
+            };
+            RadioButton radioButtonV3 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 122),
+                Name = "radioButtonV3",
+                Size = new Size(17, 16),
+                TabIndex = 2,
+                TabStop = true,
+                UseVisualStyleBackColor = true,
+                Text = givenQuestions.ElementAt(id).variants.ElementAt(2).text
+            };
+            RadioButton radioButtonV4 = new RadioButton
+            {
+                AutoSize = true,
+                Location = new Point(27, 149),
+                Name = "radioButtonV4",
+                Size = new Size(17, 16),
+                TabIndex = 3,
+                TabStop = true,
+                UseVisualStyleBackColor = true,
+                Text = givenQuestions.ElementAt(id).variants.ElementAt(3).text
+            };
+            // Коробка
+            GroupBox groupBox = new GroupBox();
+            groupBox.Controls.Add(labelQuestion);
+            groupBox.Controls.Add(radioButtonV4);
+            groupBox.Controls.Add(radioButtonV3);
+            groupBox.Controls.Add(radioButtonV2);
+            groupBox.Controls.Add(radioButtonV1);
+            groupBox.Location = new Point(48, 112);
+            groupBox.Name = "groupBox";
+            groupBox.Size = new Size(1000, 370);
+            groupBox.TabIndex = 10;
+            groupBox.TabStop = false;
+            groupBox.Text = $"Питання #{id + 1}";
+            groupBox.Hide();
+            // Виведення
+            this.Controls.Add(groupBox);
+            // Збереження
+            RadioButton[] variants = { radioButtonV4, radioButtonV3, radioButtonV2, radioButtonV1 };
+            questionReferences.Add(new TakeTestQuestionReferences(groupBox, variants));
+            
+        }
+
+        private void button_StartTest_Click(object sender, EventArgs e)
+        {
+            label_TestName.Hide();
+            label_QuestionAmount.Hide();
+            button_StartTest.Hide();
+            GroupBox question = (GroupBox)questionReferences.ElementAt(currentQuestion).groupBox;
+            question.Show();
+            button_Next.Show();
+        }
+
+        private void button_Previous_Click(object sender, EventArgs e)
+        {
+            GroupBox question = (GroupBox)questionReferences.ElementAt(currentQuestion).groupBox;
+            question.Hide();
+            currentQuestion--;
+            GroupBox newQuestion = (GroupBox)questionReferences.ElementAt(currentQuestion).groupBox;
+            newQuestion.Show();
+            if (currentQuestion == 0)
+            {
+                button_Previous.Hide();
+            }
+            button_Next.Show();
+            button_EndTest.Hide();
+
+        }
+
+        private void button_Next_Click(object sender, EventArgs e)
+        {
+            GroupBox question = (GroupBox)questionReferences.ElementAt(currentQuestion).groupBox;
+            question.Hide();
+            currentQuestion++;
+            GroupBox newQuestion = (GroupBox)questionReferences.ElementAt(currentQuestion).groupBox;
+            newQuestion.Show();
+            button_Previous.Show();
+            if (currentQuestion == givenQuestions.Count - 1)
+            {
+                button_Next.Hide();
+                button_EndTest.Show();
+            }
+        }
+
+        private void button_EndTest_Click(object sender, EventArgs e)
+        {
+            // Кількість правильних відповідей
+            int rightAnswerAmount = 0;
+            // Перевірка відповідей
+            for (int i = 0; i < givenQuestions.Count(); i++)
+            {
+                int variantsCount = givenQuestions.ElementAt(i).variants.Count();
+                for (int j = 0; j < variantsCount; j++) 
+                {
+                    if (givenQuestions.ElementAt(i).variants.ElementAt(j).state)
+                    {
+                        RadioButton rButton = (RadioButton)questionReferences.ElementAt(i).variants.ElementAt(j);
+                        if (rButton.Checked)
+                        {
+                            rightAnswerAmount++;
+                        }
+                    }
+                }
+            }
+            // Вивід результатів
+            GroupBox question = (GroupBox)questionReferences.ElementAt(currentQuestion).groupBox;
+            question.Hide();
+            button_Previous.Hide();
+            button_Next.Hide();
+            button_EndTest.Hide();
+            label_Result.Text = $"Результат: {rightAnswerAmount}/{givenQuestions.Count()}";
+            label_Result.Show();
         }
     }
     public static class ExtensionClass

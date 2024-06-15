@@ -65,6 +65,7 @@
     <Compile Include="TakeTest.Designer.cs">
       <DependentUpon>TakeTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="TakeTestQuestionReferences.cs" />
     <Compile Include="TestInfo.cs" />
     <Compile Include="TestRedactor.cs">
       <SubType>Form</SubType>
