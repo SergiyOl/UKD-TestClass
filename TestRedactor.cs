@@ -54,11 +54,30 @@ namespace UKD_TestClass
                     using (StreamReader reader = new StreamReader(fileStream))
                     {
                         fileContent = reader.ReadToEnd();
-                        // Запис даних
-                        testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
+                        // Перевірка на правильність файлу
+                        try
+                        {
+                            // Запис даних
+                            testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
+                        }
+                        catch
+                        {
+                            if (MessageBox.Show("Сталась помилка при спробі зчитування файлу. Спробувати ще раз?", "Помилка", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                            {
+                                LoadTest();
+                                return;
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
                         // Показ зчитаної інформації про тест
                         textBox_TestName.Text = testInfo.testName;
-                        textBox_GivenQuestionAmount.Text = $"{testInfo.givenQuestionAmount}";
+                        if (testInfo.givenQuestionAmount != 0)
+                        {
+                            textBox_GivenQuestionAmount.Text = $"{testInfo.givenQuestionAmount}";
+                        }
                         textBox_Password.Text = testInfo.password;
                         checkBox_ScrumbledQuestions.Checked = testInfo.scrumbledQuestion;
                         checkBox_ScrumbledVariants.Checked = testInfo.scrumbledVariants;
@@ -80,10 +99,10 @@ namespace UKD_TestClass
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button_AddNewQuestion_Click(object sender, EventArgs e)
         {
             createQuestion();
-            label3.Text = $"{questionAmount}";
+            label_QuestionAmountCounter.Text = $"{questionAmount}";
         }
 
         private void buttonDelete_Click(object sender, EventArgs e)
@@ -96,12 +115,70 @@ namespace UKD_TestClass
             PushIndexes(id + 1);
             testReferences.questions.RemoveAt(id);
             questionAmount--;
-            label3.Text = $"{questionAmount}";
+            label_QuestionAmountCounter.Text = $"{questionAmount}";
         }
 
         private void button_Save_Click(object sender, EventArgs e)
         {
-            testInfo = new TestInfo(textBox_TestName.Text, textBox_Password.Text, Int32.Parse(textBox_GivenQuestionAmount.Text), checkBox_ScrumbledQuestions.Checked, checkBox_ScrumbledVariants.Checked);
+            // Перевірка правильності введених даних
+            if (textBox_TestName.Text == "") // Назва тесту
+            { 
+                MessageBox.Show("Назва тесту не введена", "Неправильно введені дані", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            else if (textBox_GivenQuestionAmount.Text != "") // Кількість заданих питань
+            {
+                try
+                {
+                    Int32.Parse(textBox_GivenQuestionAmount.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Кількісь заданих питань неправильно введена (поле приймає лише числа або порожнє значення)", "Неправильно введені дані", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+            else if (testReferences.questions.Count == 0) // Кількість питань
+            {
+                MessageBox.Show("В тесті має бути принаймні одне питання", "Неправильно введені дані", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            // Правильна відповідь
+            foreach (var question in testReferences.questions)
+            { 
+                bool isAnswerChecked = false;
+                foreach (var variant in question.variants)
+                {
+                    RadioButton rButton = (RadioButton)variant.state;
+                    if (rButton.Checked)
+                    {
+                        isAnswerChecked = true;
+                        break;
+                    }
+                }
+                if (isAnswerChecked)
+                {
+                    continue;
+                }
+                else
+                {
+                    MessageBox.Show("Кожне питання повинне мати правильну відповідь", "Неправильно введені дані", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
+            // Збір інформації
+            int givenQuestionAmount; // Кількість заданих питань
+            if (textBox_GivenQuestionAmount.Text != "")
+            {
+                givenQuestionAmount = Int32.Parse(textBox_GivenQuestionAmount.Text);
+            }
+            else
+            {
+                givenQuestionAmount = 0;
+            }
+            // Запис у об'єкт
+            testInfo = new TestInfo(textBox_TestName.Text, textBox_Password.Text, givenQuestionAmount, checkBox_ScrumbledQuestions.Checked, checkBox_ScrumbledVariants.Checked);
             foreach (var item in testReferences.questions)
             {
                 TextBox question = (TextBox)item.question;
@@ -135,7 +212,7 @@ namespace UKD_TestClass
 
         private void MoveQuestions(int amount, int startPos)
         {
-            button1.Location = new Point(button1.Location.X, button1.Location.Y - amount);
+            button_AddNewQuestion.Location = new Point(button_AddNewQuestion.Location.X, button_AddNewQuestion.Location.Y - amount);
             for (int i = startPos; i<testReferences.questions.Count; i++)
             {
                 GroupBox group = (GroupBox)testReferences.questions.ElementAt(i).groupBox;
@@ -271,7 +348,7 @@ namespace UKD_TestClass
             groupBox.Controls.Add(radioButtonV3);
             groupBox.Controls.Add(radioButtonV2);
             groupBox.Controls.Add(radioButtonV1);
-            groupBox.Location = new Point(48, button1.Location.Y); 
+            groupBox.Location = new Point(48, button_AddNewQuestion.Location.Y); 
             groupBox.Name = "groupBox";
             groupBox.Size = new Size(810, 180);
             groupBox.TabIndex = 10;
@@ -287,7 +364,7 @@ namespace UKD_TestClass
                                     new RedactorVariant(radioButtonV3, textBoxV3),
                                     new RedactorVariant(radioButtonV4, textBoxV4)));
             // Посунути кнопку
-            button1.Location = new Point(button1.Location.X, button1.Location.Y + 200);
+            button_AddNewQuestion.Location = new Point(button_AddNewQuestion.Location.X, button_AddNewQuestion.Location.Y + 200);
         }
 
         private void button_Back_Click(object sender, EventArgs e)

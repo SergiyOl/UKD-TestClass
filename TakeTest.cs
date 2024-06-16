@@ -42,6 +42,7 @@ namespace UKD_TestClass
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
 
+                // Перевірка чи був обраний файл
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Get the path of specified file
@@ -53,15 +54,38 @@ namespace UKD_TestClass
                     using (StreamReader reader = new StreamReader(fileStream))
                     {
                         fileContent = reader.ReadToEnd();
-                        // Запис даних
-                        testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
+                        // Перевірка на правильність файлу
+                        try
+                        {
+                            // Запис даних
+                            testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
+                        }
+                        catch 
+                        {
+                            if (MessageBox.Show("Сталась помилка при спробі зчитування файлу. Спробувати ще раз?", "Помилка", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+                            {
+                                LoadTest();
+                                return;
+                            }
+                            else
+                            {
+                                button_Back.PerformClick();
+                                return;
+                            }
+                        }
+                        
                         // Створення тесту
                         // Кількість питань
                         int givenQuestionAmount;
-                        if (testInfo.givenQuestionAmount == 0)
-                        { givenQuestionAmount = testInfo.questions.Count(); }
+                        if (testInfo.givenQuestionAmount == 0 || 
+                            testInfo.givenQuestionAmount > testInfo.questions.Count())
+                        { 
+                            givenQuestionAmount = testInfo.questions.Count(); 
+                        }
                         else 
-                        { givenQuestionAmount = testInfo.givenQuestionAmount; }
+                        { 
+                            givenQuestionAmount = testInfo.givenQuestionAmount; 
+                        }
                         // Запис питань у список
                         for (int i = 0; i < givenQuestionAmount; i++)
                         {
@@ -83,6 +107,10 @@ namespace UKD_TestClass
                             CreateTestPage(i);
                         }
                     }
+                }
+                else
+                {
+                    button_Back.PerformClick();
                 }
             }
         }
