@@ -9,13 +9,11 @@ namespace UKD_TestClass
     class TakeTestQuestionReferences
     {
         public object groupBox;
-        /*public object question;*/
         public object[] variants;
 
-        public TakeTestQuestionReferences(object groupBox_, /*object question_,*/ object[] variants_)
+        public TakeTestQuestionReferences(object groupBox_, object[] variants_)
         {
             groupBox = groupBox_;
-            /*question = question_;*/
             variants = variants_;
         }
     }

@@ -60,7 +60,7 @@ namespace UKD_TestClass
                             // Запис даних
                             testInfo = JsonConvert.DeserializeObject<TestInfo>(fileContent);
                         }
-                        catch 
+                        catch
                         {
                             if (MessageBox.Show("Сталась помилка при спробі зчитування файлу. Спробувати ще раз?", "Помилка", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
                             {
@@ -73,18 +73,25 @@ namespace UKD_TestClass
                                 return;
                             }
                         }
-                        
+                        // Запис інформації про тест
+                        label_TestName.Text = $"Назва тесту: {testInfo.testName}";
+                        label_QuestionAmount.Text = $"Кількість питань: {testInfo.givenQuestionAmount}";
                         // Створення тесту
                         // Кількість питань
                         int givenQuestionAmount;
-                        if (testInfo.givenQuestionAmount == 0 || 
+                        if (testInfo.givenQuestionAmount == 0 ||
                             testInfo.givenQuestionAmount > testInfo.questions.Count())
-                        { 
-                            givenQuestionAmount = testInfo.questions.Count(); 
+                        {
+                            givenQuestionAmount = testInfo.questions.Count();
                         }
-                        else 
-                        { 
-                            givenQuestionAmount = testInfo.givenQuestionAmount; 
+                        else
+                        {
+                            givenQuestionAmount = testInfo.givenQuestionAmount;
+                        }
+                        // Перемішення питань
+                        if (testInfo.scrumbledQuestion)
+                        {
+                            ExtensionClass.Shuffle(testInfo.questions);
                         }
                         // Запис питань у список
                         for (int i = 0; i < givenQuestionAmount; i++)
@@ -95,11 +102,6 @@ namespace UKD_TestClass
                             {
                                 ExtensionClass.Shuffle(givenQuestions.ElementAt(i).variants);
                             }
-                        }
-                        // Перемішення питань
-                        if (testInfo.scrumbledQuestion)
-                        {
-                            ExtensionClass.Shuffle(givenQuestions);
                         }
                         // Створення інтерфейсу питань
                         for (int i = 0; i < givenQuestions.Count(); i++)
@@ -189,7 +191,7 @@ namespace UKD_TestClass
             // Виведення
             this.Controls.Add(groupBox);
             // Збереження
-            RadioButton[] variants = { radioButtonV4, radioButtonV3, radioButtonV2, radioButtonV1 };
+            RadioButton[] variants = { radioButtonV1, radioButtonV2, radioButtonV3 , radioButtonV4};
             questionReferences.Add(new TakeTestQuestionReferences(groupBox, variants));
             
         }
@@ -201,7 +203,15 @@ namespace UKD_TestClass
             button_StartTest.Hide();
             GroupBox question = (GroupBox)questionReferences.ElementAt(currentQuestion).groupBox;
             question.Show();
-            button_Next.Show();
+            if (questionReferences.Count() == 1)
+            {
+                button_EndTest.Show();
+            }
+            else
+            {
+                button_Next.Show();
+            }
+            /*label1.Text = JsonConvert.SerializeObject(givenQuestions);*/ // Для фіксу багів
         }
 
         private void button_Previous_Click(object sender, EventArgs e)
@@ -217,7 +227,6 @@ namespace UKD_TestClass
             }
             button_Next.Show();
             button_EndTest.Hide();
-
         }
 
         private void button_Next_Click(object sender, EventArgs e)
