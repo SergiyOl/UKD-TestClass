@@ -73,9 +73,6 @@ namespace UKD_TestClass
                                 return;
                             }
                         }
-                        // Запис інформації про тест
-                        label_TestName.Text = $"Назва тесту: {testInfo.testName}";
-                        label_QuestionAmount.Text = $"Кількість питань: {testInfo.givenQuestionAmount}";
                         // Створення тесту
                         // Кількість питань
                         int givenQuestionAmount;
@@ -108,6 +105,9 @@ namespace UKD_TestClass
                         {
                             CreateTestPage(i);
                         }
+                        // Запис інформації про тест
+                        label_TestName.Text = $"Назва тесту: {testInfo.testName}";
+                        label_QuestionAmount.Text = $"Кількість питань: {givenQuestionAmount}";
                     }
                 }
                 else
