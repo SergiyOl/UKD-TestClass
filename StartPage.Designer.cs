@@ -95,7 +95,7 @@ namespace UKD_TestClass
             this.button_About.Name = "button_About";
             this.button_About.Size = new System.Drawing.Size(200, 50);
             this.button_About.TabIndex = 5;
-            this.button_About.Text = "Довідник";
+            this.button_About.Text = "Про додаток";
             this.button_About.UseVisualStyleBackColor = true;
             this.button_About.Click += new System.EventHandler(this.button_About_Click);
             // 

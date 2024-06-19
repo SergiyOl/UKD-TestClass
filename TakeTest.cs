@@ -183,7 +183,7 @@ namespace UKD_TestClass
             groupBox.Controls.Add(radioButtonV1);
             groupBox.Location = new Point(48, 112);
             groupBox.Name = "groupBox";
-            groupBox.Size = new Size(1000, 370);
+            groupBox.Size = new Size(800, 370);
             groupBox.TabIndex = 10;
             groupBox.TabStop = false;
             groupBox.Text = $"Питання #{id + 1}";
